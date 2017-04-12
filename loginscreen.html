@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Login/Sign-In</title>
+    
+    
+    <link rel="stylesheet" href="css/normalize.css">
+
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+        <link rel="stylesheet" href="css/style2.css">
+<script type="text/javascript">
+	function testStorage(){
+		function saveEmail(){
+			var emailAdd=document.getElementById('user-email');
+			localStorage.setItem('user-email',emailAdd.value);
+			
+		}
+		function savePwd(){
+			var encryption='voltday';
+			var pwd=document.getElementById('user-pw');
+			localStorage.setItem('user-pw',pwd.value+encryption) ;
+		}
+		function rePWD(){
+			var encryption='voltday';
+			var rePwd=document.getElementById('user-pw-repeat');
+			localStorage.setItem('user-pw-repeat',rePwd.value+encryption) ;
+				}
+		
+				saveEmail();
+				savePwd();
+				rePWD();
+				if(localStorage.getItem('user-pw')== null){
+				alert('Please enter password');
+			}
+			if(localStorage.getItem('user-pw-repeat')== null){
+				alert('Please repeat the password');
+			}
+			
+			if(localStorage.getItem('user-pw')==localStorage.getItem('user-pw-repeat')){
+					alert('Register success! Welcome to VoltDay Project, '+localStorage.getItem('user-email'));
+				}else{
+						alert('Password not match (￣△￣)');
+					 }
+				}
+				
+				
+	function checkInfo(){
+		        saveEmail();
+				savePwd();
+		function saveEmail(){
+			var emailAdd=document.getElementById('user1email');
+			localStorage.setItem('user1email',emailAdd.value);
+			
+		}
+		function savePwd(){
+			var encryption='voltday';
+			var pwd=document.getElementById('user1pw');
+			localStorage.setItem('user1pw',pwd.value+encryption) ;
+		}
+		
+		if(localStorage.getItem('user-pw')==localStorage.getItem('user1pw')){
+					window.open("ClassMenu.html");
+				}else{
+						alert('Password not match (￣△￣)');
+					 }
+				}
+		
+	
+	
+
+				
+</script>
+    
+    
+    
+  </head>
+
+  <body>
+<img src="MULogo.png" alt="Marquette University" style="margin-left:7.5%"><br><br>
+    <div class="logmod">
+  <div class="logmod__wrapper">
+    <span class="logmod__close">Close</span>
+    <div class="logmod__container">
+      <ul class="logmod__tabs">
+        <li data-tabtar="lgm-2"><a href="#">Login</a></li>
+        <li data-tabtar="lgm-1"><a href="#">Sign Up</a></li>
+      </ul>
+       
+      <div class="logmod__tab-wrapper">
+      <div class="logmod__tab lgm-1">
+        <div class="logmod__heading">
+          <span class="logmod__heading-subtitle">Enter your personal details <strong>to create an acount</strong></span>
+        </div>
+        <div class="logmod__form">
+          <form accept-charset="utf-8" action="#" class="simform" onsubmit="testStorage()">
+            <div class="sminputs">
+              <div class="input full">
+                <label class="string optional" for="user-name">Email </label>
+                <input class="string optional" maxlength="255" id="user-email" placeholder="Email" type="email" size="50" />
+              </div>
+            </div>
+            <div class="sminputs">
+              <div class="input string optional">
+                <label class="string optional" for="user-pw">Password </label>
+                <input class="string optional" maxlength="255" id="user-pw" placeholder="Password" type="password" size="50" />
+              </div>
+              <div class="input string optional">
+                <label class="string optional" for="user-pw-repeat">Repeat password</label>
+                <input class="string optional" maxlength="255" id="user-pw-repeat" placeholder="Repeat password" type="password" size="50" />
+              </div>
+            </div>
+            <div class="simform__actions">
+              <input class="sumbit" name="commit" type="submit" value="Register" >
+              <span class="simform__actions-sidetext">By creating an account you agree to our <a class="special" href='https://www.dropbox.com/s/asl119o2d47tvr8/Terms.txt?dl=0' target="_blank" role="link">Terms & Privacy</a></span>
+            </div> 
+          </form>
+        </div> 
+        <div class="logmod__alter">
+          <div class="logmod__alter-container">
+            <a href="http://www.facebook.com/login/" class="connect facebook">
+              <div class="connect__icon">
+                <i class="fa fa-facebook"></i>
+              </div>
+              <div class="connect__context">
+                <span>Create an account with <strong>Facebook</strong></span>
+              </div>
+            </a>
+              
+            <a href="http://www.plus.google.com/" class="connect googleplus">
+              <div class="connect__icon">
+                <i class="fa fa-google-plus"></i>
+              </div>
+              <div class="connect__context">
+                <span>Create an account with <strong>Google+</strong></span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="logmod__tab lgm-2">
+        <div class="logmod__heading">
+          <span class="logmod__heading-subtitle">Enter your email and password <strong>to sign in</strong></span>
+        </div> 
+        <div class="logmod__form">
+          
+		  
+		  
+		  <form accept-charset="utf-8"  class="simform" onsubmit="checkInfo()" >
+            <div class="sminputs">
+              <div class="input full">
+                <label class="string optional" for="user-name"> Email* </label>
+                <input class="string optional" maxlength="255" id="user1email" placeholder="Email" type="email" size="50" />
+              </div>
+            </div>
+            <div class="sminputs">
+              <div class="input full">
+                <label class="string optional" for="user_pw"> Password* </label>
+                <input class="string optional" maxlength="255" id="user1pw" placeholder="Password" type="password" size="50" />
+                						<span class="hide-password">Show</span>
+              </div>
+            </div>
+            <div class="simform__actions">
+            	
+             <div class="col-lg-2">
+			  
+			  <input style="background-color:gold" class="sumbit" name="commit" type="submit" value="LogIn" >	   
+            </div> 	
+            </div> 
+          </form>
+          
+          
+
+        </div> 
+        <div class="logmod__alter">
+          <div class="logmod__alter-container">
+            <a href="https://www.facebook.com/login/" class="connect facebook">
+              <div class="connect__icon">
+                <i class="fa fa-facebook"></i>
+              </div>
+              <div class="connect__context">
+                <span>Sign in with <strong>Facebook</strong></span>
+              </div>
+            </a>
+            <a href="http://www.plus.google.com/" class="connect googleplus">
+              <div class="connect__icon">
+                <i class="fa fa-google-plus"></i>
+              </div>
+              <div class="connect__context">
+                <span>Sign in with <strong>Google+</strong></span>
+              </div>
+            </a>
+          </div>
+        </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+    
+    
+  </body>
+</html>
