@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<style>
+    form {
+        color: #ffffff;
+        padding: 10px;
+        font-size: 23px;
+        text-align: center;
+    }
+</style>
+<html>
+<head>
+    <title>MU Portal to the Classroom in the Cloud Login</title>
+    <script src="https://swx.cdn.skype.com/shared/v/1.2.15/SkypeBootstrap.min.js"></script>
+    <meta charset="utf-8" />
+
+</head>
+<body style="background:url(bgimg.png); background-repeat:no-repeat; background-size: 100%">
+
+    <div class="logo">
+        <center><img src="MULogo.png" alt="Marquette University" style="margin-top:20%"></center><br><br>
+    </div>
+    
+    <center><font size="8" color="white">Login</font></center>
+
+    <form name="login">
+        Username <input type="text" name="userid" /><br>
+        &nbsp;Password <input type="password" name="pswrd" /><br><br>
+        <input type="button" onclick="check(this.form)" value="Login" />
+        <input type="reset" value="Cancel" />
+    </form>
+
+    <script language="javascript">
+		function check(form)/*function to check userid & password*/
+		{
+		/*the following code checkes whether the entered userid and password are matching*/
+			if(form.userid.value == "userid" && form.pswrd.value == "userpw")
+			{
+			    window.open('ClassMenu.html', '_self', false)/*opens the target page while Id & password matches*/
+			}
+			else
+			{
+				alert("Error Password or Username")/*displays error message*/
+			}
+		}
+    </script>
+</body>
+</html>

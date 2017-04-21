@@ -6,6 +6,7 @@
         color: #153252;
         padding: 10px;
         font-size: 16px;
+		text-align: center;
         border: none;
         cursor: pointer;
     }
@@ -18,8 +19,6 @@
     /* The container <div> - needed to position the dropdown content */
     .dropdown {
         position: relative;
-        margin-top: 20%;
-        margin-left: 45%;
         display: inline-block;
     }
 
@@ -27,6 +26,7 @@
     .dropdown-content {
         display: none;
         position: absolute;
+        text-align: left;
         background-color: #ffffff;
         min-width: 300px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -45,6 +45,13 @@
     .dropdown-content a:hover {
         background-color: #f1f1f1;
     }
+	
+	.dropdown-menu-center {
+		left: 50%;
+		right: auto;
+		text-align: center;
+		transform: translate(-50%, 0);
+	}
 
     /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
     .show {
@@ -54,11 +61,14 @@
 <html>
 <head>
     <title>MU Portal to the Classroom in the Cloud</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
     <script src="https://swx.cdn.skype.com/shared/v/1.2.15/SkypeBootstrap.min.js"></script>
     <meta charset="utf-8" />
 </head>
 <body style="background:url(bgimg.png); background-repeat:no-repeat; background-size: 100%">
+    
     <script>
+        
         // Reference to SkypeBootstrap.min.js
         // Implements the Skype object model via https://swx.cdn.skype.com/shared/v/1.2.15/SkypeBootstrap.min.js
 
@@ -111,20 +121,28 @@
         });
         */
     </script>
-
-    <div class="dropdown">
-        <img src="MULogo.png" alt="Marquette University" style="margin-left:7.5%"><br><br>
-        <center><font size="5" color="white" text-align="center">Classes</font></center><br>
+	
+	<center><img src="MULogo.png" alt="Marquette University" style="margin-top:20%"></center><br><br>
+	<center><font size="8" color="white">Classes</font></center><br>
+	
+    <div class="dropdown dropdown-menu-center">
         <button onclick="myFunction()" class="dropbtn">Click here to select a class</button>
         <div id="myDropdown" class="dropdown-content">
-            <!-- # = webpage -->
-            <a href="#">COSC 4610 - Data Mining</a>
-            <a href="#">COSC 4400 - Compiler Construction</a>
-            <a href="#">COSC 3550 - Programming Computer Games</a>
-            <a href="#">COSC 3250 - Operating Systems</a>
+            <a href="ClassMeeting.html" id="4610" onclick="getClassName(4610)">COSC 4610 - Data Mining</a>
+            <a href="ClassMeeting.html" id="4400" onclick="getClassName(4400)">COSC 4400 - Compiler Construction</a>
+            <a href="ClassMeeting.html" id="3550" onclick="getClassName(3550)">COSC 3550 - Programming Computer Games</a>
+            <a href="ClassMeeting.html" id="3250" onclick="getClassName(3250)">COSC 3250 - Operating Systems</a>
         </div>
-        <br><br><center><button onclick="disconnect()">Disconnect</button></center>
     </div>
+	<br><br><br><center><button onclick="disconnect()">Disconnect</button></center>
+
+    <script>
+        function getClassName(c) {
+            var classSelected = document.getElementById(c).innerHTML;
+            //document.write(classSelected);
+            localStorage.setItem("x", classSelected);
+        }
+    </script>
 
     <script>
         function disconnect() {
