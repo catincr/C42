@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>ChatBox</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.js"></script>
+	<script type="text/javascript">
+
+$(document).ready(function() {
+  $('button')
+    .click(function() {
+      var message = $('textarea').val();
+	  
+	  var old= $('#mycontent').html();
+
+ $('#mycontent').append('<p class="chatmessage">' + message + '</p>');
+
+    });
+});
+
+
+
+</script>
+
+	
+	
+</head>
+
+
+
+
+<body>
+<!--<div id="mycontent"></div>-->
+
+	<div class= "chatbox">
+		
+		<div class="chatlogs"> <!--sample user input-->
+		
+		<!--sample user1 input-->
+		
+		<div class="chat classmates">
+			
+				<div class="user-photo"><img src="User1.jpg"></div>
+				
+				<p class="chatmessage">Go Go Marquette! </p>
+		
+		</div>
+			
+		<!--sample user2 input-->
+		<div class="chat user">
+			
+				<div class="user-photo"><img src="User2.jpg"></div>
+				
+				<p class="chatmessage"> Happy computing! </p>
+		
+		</div>
+			
+			<!--sample user3 input-->
+		<div class="chat classmates">
+			
+				<div class="user-photo"><img src="User3.jpg"></div>
+				
+				<p class="chatmessage"> This is a test input for
+					a really long ****************
+					**************************123
+					*************************zxc**
+					******************************
+					******************************
+					******************************
+					******************************
+					input ^_^</p>
+		
+		</div>
+			
+			
+			<!--sample user4 input-->
+		<div class="chat classmates">
+			
+				<div class="user-photo"><img src="User4.jpg"></div>
+				
+				<p class="chatmessage"> This is a test input for
+					a really long ****************
+					**************************123
+					*************************zxc**
+					******************************
+					******************************
+					******************************
+					******************************
+					input ^_^</p>
+		
+		</div>
+		<!--Sample input5-->
+		<div class="chat user" id="mycontent" >
+		<div class="user-photo"><img src="User4.jpg"></div>
+		<p class="chatmessage">Weekend!</p>
+
+			</div>
+		
+	</div>
+			
+			<div class="chat-form">
+				
+					<textarea></textarea>
+					<button>Send</button>
+			
+			</div>
+
+	
+</div>
+	
+	
+
+
+</body>
+
+
+
+</html>
