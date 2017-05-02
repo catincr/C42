@@ -10,38 +10,110 @@
 <html>
 <head>
     <title>MU Portal to the Classroom in the Cloud Login</title>
+    <link rel="shortcut icon" type="image/x-icon" href="marq-16-mast-logo.png" />
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
     <script src="https://swx.cdn.skype.com/shared/v/1.2.15/SkypeBootstrap.min.js"></script>
     <meta charset="utf-8" />
-
 </head>
 <body style="background:url(bgimg.png); background-repeat:no-repeat; background-size: 100%">
 
     <div class="logo">
         <center><img src="MULogo.png" alt="Marquette University" style="margin-top:20%"></center><br><br>
     </div>
-    
+
     <center><font size="8" color="white">Login</font></center>
 
-    <form name="login">
-        Username <input type="text" name="userid" /><br>
-        &nbsp;Password <input type="password" name="pswrd" /><br><br>
-        <input type="button" onclick="check(this.form)" value="Login" />
-        <input type="reset" value="Cancel" />
+    <form>
+        <div>
+            Username <input type="email" id="username" placeholder="Email">
+        </div>
+        <div>
+            &nbsp;Password <input type="password" id="password" placeholder="Password">
+        </div>
+        <br>
+        <input type="button" id="btnLogIn" value="Login" />
+        <input type="button" id="btnLogOut" value="Logout" />
     </form>
 
-    <script language="javascript">
-		function check(form)/*function to check userid & password*/
-		{
-		/*the following code checkes whether the entered userid and password are matching*/
-			if(form.userid.value == "userid" && form.pswrd.value == "userpw")
-			{
-			    window.open('ClassMenu.html', '_self', false)/*opens the target page while Id & password matches*/
-			}
-			else
-			{
-				alert("Error Password or Username")/*displays error message*/
-			}
-		}
+    <script>
+        
+    	if (!location.hash) {
+            location.assign('https://login.microsoftonline.com/common/oauth2/authorize?response_type=token' +
+            '&client_id=' + 'b29b8ed6-fc98-4070-9ad1-9e78f0743924' +
+            '&redirect_uri=' + location.href +
+            '&resource=https://webdir.online.lync.com');
+        }
+        
+        if (/^#access_token=/.test(location.hash)) {
+        	window.alert("authorized with Azure");
+        	InitialiseSkype();
+        }
+        
+        var client;
+        function InitialiseSkype() {
+            var config = {
+                apiKey: 'a42fcebd-5b43-4b89-a065-74450fb91255', // SDK
+            };
+            Skype.initialize({ apiKey: config.apiKey }, function (api) {
+                client = new api.application();
+                // whenever client.state changes, display its value
+                client.signInManager.state.changed(function (state) {
+                    $('#client_state').text(state);
+                });
+                //once intialised, sign in
+                SignInToSkype();
+            }, function (err) {
+                console.log(err);
+                alert('Cannot load the SDK.');
+            });
+        }
+        
+        function SignInToSkype() {
+            $('#client_state').text("Signing in...");
+            var options = {
+                "client_id": "b29b8ed6-fc98-4070-9ad1-9e78f0743924",
+                "origins": ["https://webdir.online.lync.com/autodiscover/autodiscoverservice.svc/root"],
+                "cors": true, "version": 'MUPortal/1.0',
+                redirect_uri: '/MU_Portal/ClassMenu.html', // ensure this URL is in your Reply URL in Azure
+            };
+            client.signInManager.signIn(options).then(function () {
+                window.alert("all signed in!")
+                //do something interesting here
+                alert('Signed in as ' + client.personsAndGroupsManager.mePerson.displayName());
+                //window.open('ClassMenu.html', '_self', false);
+            });
+        }
+        
+        $('#btnLogIn').click(function () {
+        	alert('initializing login');
+            var client = new Skype.Web.Model.Application;
+            client.signInManager.signIn({
+                username: $('#username').val(),
+                password: $('#password').val()
+            }).then(function () {
+                //log in worked!
+                alert('Signed in as ' + client.personsAndGroupsManager.mePerson.displayName());
+                window.open('ClassMenu.html', '_self', false);
+            }, function (error) {
+                //Something went wrong.
+                alert(error);
+            });
+        });
+
+        $('#btnLogOut').click(function () {
+            // start signing out
+            client.signInManager.signOut().then(function () {
+                alert('Signed out');
+            }, function (error) {
+                alert(error);
+            });
+        });
+		
+        // whenever state changes, display its value    
+        //client.signInManager.state.changed(function (state) {
+        //    $('#application_state').text(state);
+        //});
+        
     </script>
 </body>
 </html>

@@ -1,7 +1,14 @@
 ﻿<!DOCTYPE html>
+<style>
+    .conversationText{
+    width: 700px;
+    height: 500px;
+}
+</style>
 <html>
 <head>
     <title>MU Portal to the Classroom in the Cloud</title>
+    <link rel="shortcut icon" type="image/x-icon" href="marq-16-mast-logo.png" />
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
     <script src="https://swx.cdn.skype.com/shared/v/1.2.15/SkypeBootstrap.min.js"></script>
     <meta charset="utf-8" />
@@ -14,7 +21,69 @@
         document.write("<font size=\"7\" color=\"white\" text-align=\"center\" style=\"margin-left:7.5%\">" + x + "</font>");
     </script>
 
-    <!-- Everything goes here -->
+    <br>
+    <br>
+    
+	<font color="white" id="loginStatus" style="margin-left:1%"></font>
+	
+	<br>
+	<br>
+    
+    <font color="white" style="margin-left:1%"><label for="contact">Start Conversation with:</label></font>
+	<input type="email" id="contact" placeholder="Contact SIP Address">
+	<button id="btnStartConversation">Start</button>
+
+    <script type="text/javascript">
+	
+        var client;
+        $(function () {
+            'use strict';
+
+  	        Skype.initialize({
+                apiKey: 'SWX-BUILD-SDK',
+            }, function (api) {
+                client = new api.application();           
+                // whenever client.state changes, display its value
+  		        client.signInManager.state.changed(function (state) {
+                    $('#loginStatus').text("Login State: " + state);
+  		        });
+            }, function (err) {
+                alert('Error loading Skype Web SDK: ' + err);
+            }); 
+    
+            $('#btnStartConversation').click(function () {
+    	        alert('starting conversation with ' + $('#contact').val());
+                StartConversation($('#contact').val());
+            });
+
+            function StartConversation (contactSIP) {
+                //first, get the person to start a conversation with. Assume one person.
+                var person;
+                GetContactFromName(contactSIP).then(function (results) {
+                    results.forEach(function (result) {
+                        person = result.result;
+                    });
+                    //create the conversation object
+                    var conversation = client.conversationsManager.createConversation();
+                    alert('conversation object created');
+                    //add the person to the conversation by creating a conversation participant object
+                    var convParticipant = conversation.createParticipant(person);
+                    conversation.participants.add(convParticipant);
+                    //add the newly created conversation to the ConversationManager list
+                    client.conversationsManager.conversations.add(conversation);
+                    conversation.chatService.start();
+                });
+            }
+
+            function GetContactFromName(contactSIP) {
+                var query = client.personsAndGroupsManager.createPersonSearchQuery();
+                query.text(contactSIP);
+                query.limit(1);
+                return query.getMore();          
+            }
+        });
+
+    </script>
 
 </body>
 </html>
