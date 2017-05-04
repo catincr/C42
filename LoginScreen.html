@@ -33,6 +33,9 @@
         <br>
         <input type="button" id="btnLogIn" value="Login" />
         <input type="button" id="btnLogOut" value="Logout" />
+        <br>
+        <br>
+        <font color="white" id="client_state"></font>
     </form>
 
     <script>
@@ -74,16 +77,43 @@
                 "client_id": "b29b8ed6-fc98-4070-9ad1-9e78f0743924",
                 "origins": ["https://webdir.online.lync.com/autodiscover/autodiscoverservice.svc/root"],
                 "cors": true, "version": 'MUPortal/1.0',
-                redirect_uri: '/MU_Portal/ClassMenu.html', // ensure this URL is in your Reply URL in Azure
+                redirect_uri: '/MU_Portal/token.html', // ensure this URL is in your Reply URL in Azure
             };
             client.signInManager.signIn(options).then(function () {
                 window.alert("all signed in!")
                 //do something interesting here
                 alert('Signed in as ' + client.personsAndGroupsManager.mePerson.displayName());
                 //window.open('ClassMenu.html', '_self', false);
+				
+                $('#btnLogIn').click(function () {
+                	alert('initializing login');
+                    var client = new Skype.Web.Model.Application;
+                    client.signInManager.signIn({
+                        username: $('#username').val(),
+                        password: $('#password').val()
+                    }).then(function () {
+                        //log in worked!
+                        alert('Signed in as ' + client.personsAndGroupsManager.mePerson.displayName());
+                        window.open('ClassMenu.html', '_self', false);
+                    }, function (error) {
+                        //Something went wrong.
+                        alert(error);
+                    });
+                });
+
+                $('#btnLogOut').click(function () {
+                    // start signing out
+                    client.signInManager.signOut().then(function () {
+                        alert('Signed out');
+                    }, function (error) {
+                        alert(error);
+                    });
+                });
+                
             });
         }
         
+        /*
         $('#btnLogIn').click(function () {
         	alert('initializing login');
             var client = new Skype.Web.Model.Application;
@@ -108,7 +138,8 @@
                 alert(error);
             });
         });
-		
+		*/
+        
         // whenever state changes, display its value    
         //client.signInManager.state.changed(function (state) {
         //    $('#application_state').text(state);

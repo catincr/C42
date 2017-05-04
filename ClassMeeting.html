@@ -1,8 +1,179 @@
 ﻿<!DOCTYPE html>
 <style>
-    .conversationText{
-    width: 700px;
-    height: 500px;
+#container {
+	position: absolute;
+	float: left;
+	margin: 340px;
+	margin-top: 20px;
+    width: 1350px;
+    height: 780px;
+    border: 1px #333 solid;
+}
+#videoElement {
+    width: 1350px;
+    height: 780px;
+    background-color: #666;
+}
+#disconnect {
+	margin: 700px auto;
+	margin-left: 600px;
+	width: 45px;
+	height: 45px;
+	border: none;
+	background: #e51323;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+}
+#disconnect img {
+	width: 100%;
+	height:100%;
+}
+#mute {
+	margin: 700px auto;
+	margin-left: 670px;
+	width: 45px;
+	height: 45px;
+	border: none;
+	background: #22ace4;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+}
+#mute img {
+	width: 100%;
+	height:100%;
+}
+#settings {
+	float: left;
+	margin-top: 30px;
+    margin-left: 1600px;
+	position: absolute;
+	width: 45px;
+	height: 45px;
+	border: none;
+	background: #193252;
+	border-radius: 50%;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+	z-index: 10;
+}
+#settings img {
+	width: 100%;
+	height:100%;
+}
+* {
+	margin: 0;
+	padding: 0;
+	font-family: tahoma, sans-serif;
+	box-sizing: border-box;
+}
+.chatbox {
+	float: left;
+	width: 300px;
+	min-width: 300px;
+	height: 780px;
+	background: #fff;
+	padding: 5px;
+	margin: 20px;
+	box-shadow: 0 3px #ccc;
+}
+.chatlogs {
+	padding: 10px;
+	width: 100%;
+	height: 700px;
+	background: #eee;
+	overflow-x: hiden;
+	overflow-y: scroll;
+}
+.chatlogs::-webkit-scrollbar {
+	width: 10px;
+}
+.chatlogs::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+.chat {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+}
+.chat .user-photo {
+	width: 45px;
+	height: 45px;
+	background: #ccc;
+	border-radius: 50%;
+	overflow:hidden;
+}
+.chat .user-photo img{
+	width: 100%;
+	height:100%;
+}
+.chat .chat-message {
+	width: 75%;
+	padding: 7px;
+	margin: 5px 10px 0;
+	background: #1ddced;
+	border-radius: 10px;
+	color: #fff;
+	font-size: 18px;
+	overflow-x: hidden;
+}
+.user .chat-message {
+	background: #1ddced;
+	order: -1;
+}
+.classmates .chat-message {
+	background: #1adda4;
+}
+.chat-form {
+	margin-top: 15px;
+	display: flex;
+	align-items: flex-start;
+}
+.chat-form textarea {
+	background: #fbfbfb;
+	width: 75%;
+	height: 50px;
+	border: 2px solid #eee;
+	border-radius: 3px;
+	resize: none;
+	padding: 10px;
+	font-size: 18px;
+	color: #333;
+}
+.chat-form textarea:focus {
+	background: #fff;
+}
+.chat-form textarea::-webkit-scrollbar {
+	width: 10px;
+}
+.chat-form textarea::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+.chat-form button {
+	background: #22ace4;
+	padding: 5px 15px;
+	font-size: 30px;
+	color: #fff;
+	border: none;
+	margin: 0 10px;
+	border-radius: 3px;
+	box-shadow: 0 3px 0 #0eb2c1;
+	cursor: pointer;
+	
+	-webkit-transition: background .2s ease;
+	-moz-transition: background .2s ease;
+	-o-transition: background .2s ease;
+}
+.chat-form button:hover {
+	background: #13c8d9;
 }
 </style>
 <html>
@@ -20,69 +191,96 @@
         var x = localStorage.x;
         document.write("<font size=\"7\" color=\"white\" text-align=\"center\" style=\"margin-left:7.5%\">" + x + "</font>");
     </script>
-
-    <br>
-    <br>
-    
-	<font color="white" id="loginStatus" style="margin-left:1%"></font>
 	
-	<br>
-	<br>
+	<button id="settings"><img src="settings.png"></button>
+	
+    <br>
+    <br>
     
-    <font color="white" style="margin-left:1%"><label for="contact">Start Conversation with:</label></font>
-	<input type="email" id="contact" placeholder="Contact SIP Address">
-	<button id="btnStartConversation">Start</button>
-
+	<div class= "chatbox">
+		<div class="chatlogs">
+			<div class="chat classmates">
+				<div class="user-photo"><img src="user.png"></div>
+				<p class="chat-message">Go Marquette!</p>
+			</div>
+			<div class="chat user" id="mycontent">
+				
+			</div>
+		</div>
+		<div class="chat-form">
+			<textarea id="ta"></textarea>
+			<button id="sendIM">Send</button>
+		</div>
+	</div>
+	
+	<div id="container">
+    	<video autoplay="true" id="videoElement"></video>
+    	<button id="disconnect"><img src="disconnect.png"></button>
+    	<input type="image" id="mute" src="mute.png" onclick="clicked(this);">
+    	<!--<button id="mute"><img src="mute.png"></button>-->
+	</div>
+	
     <script type="text/javascript">
-	
-        var client;
-        $(function () {
-            'use strict';
-
-  	        Skype.initialize({
-                apiKey: 'SWX-BUILD-SDK',
-            }, function (api) {
-                client = new api.application();           
-                // whenever client.state changes, display its value
-  		        client.signInManager.state.changed(function (state) {
-                    $('#loginStatus').text("Login State: " + state);
-  		        });
-            }, function (err) {
-                alert('Error loading Skype Web SDK: ' + err);
-            }); 
+    	
+    	var imgstate = true;
+    	function clicked(img) {
+    		if (imgstate) {
+        		img.src = 'muted.png';
+        		imgstate = false;
+    		}
+    		else {
+    			img.src = 'mute.png';
+    			imgstate = true;
+    		}
+    	}
     
-            $('#btnStartConversation').click(function () {
-    	        alert('starting conversation with ' + $('#contact').val());
-                StartConversation($('#contact').val());
-            });
-
-            function StartConversation (contactSIP) {
-                //first, get the person to start a conversation with. Assume one person.
-                var person;
-                GetContactFromName(contactSIP).then(function (results) {
-                    results.forEach(function (result) {
-                        person = result.result;
-                    });
-                    //create the conversation object
-                    var conversation = client.conversationsManager.createConversation();
-                    alert('conversation object created');
-                    //add the person to the conversation by creating a conversation participant object
-                    var convParticipant = conversation.createParticipant(person);
-                    conversation.participants.add(convParticipant);
-                    //add the newly created conversation to the ConversationManager list
-                    client.conversationsManager.conversations.add(conversation);
-                    conversation.chatService.start();
-                });
-            }
-
-            function GetContactFromName(contactSIP) {
-                var query = client.personsAndGroupsManager.createPersonSearchQuery();
-                query.text(contactSIP);
-                query.limit(1);
-                return query.getMore();          
-            }
-        });
-
+    	var video = document.querySelector("#videoElement");
+    
+    	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+     
+    	if (navigator.getUserMedia) {       
+        	navigator.getUserMedia({audio: true, video: true}, handleVideo, videoError);
+    	}
+     
+    	function handleVideo(stream) {
+        	video.src = window.URL.createObjectURL(stream);
+    		video.onloadedmetadata = function(e) {
+				video.play();
+				video.muted = false;
+			};
+    	}
+     
+    	function videoError(e) {
+        	//alert('no video device was found')
+    	}
+    	
+        var pic = true;
+        var pressed = true;
+        $(document).ready(function() {
+			$('#sendIM').click(function() {
+				var message = $('textarea').val();
+				if (message) {
+					var old = $('#mycontent').html();
+					if (pic) {
+						$('#mycontent').append('<div class="user-photo"><img src="user.png"></div>');
+					}
+					$('#mycontent').append('<p class="chat-message">' + message + '</p>');
+					document.getElementById('ta').value = "";
+					pic = false;
+				}
+			});
+			$('#mute').click(function() {
+				if (pressed) {
+					video.muted = true;
+					pressed = false;
+				}
+				else {
+					video.muted = false;
+					pressed = true;
+				}
+			});
+		});
+    	
     </script>
 
 </body>
